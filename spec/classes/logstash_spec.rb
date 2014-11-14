@@ -4,7 +4,7 @@ require 'spec_helper'
 
 describe 'logstash' do
   let (:facts) { {
-      :osfamily => 'RedHat'
+      :osfamily => 'RedHat', :kernel => 'Linux', :operatingsystem => 'RedHat'
   } }
 
   it { should contain_class 'logstash' }
