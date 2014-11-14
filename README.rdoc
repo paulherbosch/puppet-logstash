@@ -1,0 +1,5 @@
+= puppet-logstash module
+
+{<img src='https://codex.cegeka.be/jenkins/job/puppet-logstash/badge/icon' />}[https://codex.cegeka.be/jenkins/job/puppet-logstash/]
+
+This is the logstash module.
