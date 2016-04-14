@@ -134,6 +134,10 @@
 # [*repo_stage*]
 #   Use stdlib stage setup for managing the repo, instead of anchoring
 #
+# [*hiera_conf_enabled*]
+#   Set to true if logstash.conf config values come in via hiera
+#   Defaults to 'false'
+#
 # === Examples
 #
 # * Installation, make sure service is running and will be started at boot time:
@@ -180,7 +184,8 @@ class logstash(
   $manage_repo         = false,
   $repo_version        = false,
   $install_contrib     = false,
-  $repo_stage          = false
+  $repo_stage          = false,
+  $hiera_conf_enabled  = false
 ) inherits logstash::params {
 
   anchor {'logstash::begin': }
@@ -281,11 +286,17 @@ class logstash(
     # we need the software before configuring it
     Anchor['logstash::begin']
     -> Class['logstash::package']
-    -> Class['logstash::config']
+
+    if $hirea_conf_enabled == false {
+      -> Class['logstash::config']
+    }
 
     # we need the software and a working configuration before running a service
     Class['logstash::package'] -> Class['logstash::service']
-    Class['logstash::config']  -> Class['logstash::service']
+
+    if $hirea_conf_enabled == false {
+      Class['logstash::config']  -> Class['logstash::service']
+    }
 
     Class['logstash::service'] -> Anchor['logstash::end']
 
