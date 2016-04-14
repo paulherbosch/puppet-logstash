@@ -284,17 +284,19 @@ class logstash(
   if $ensure == 'present' {
 
     # we need the software before configuring it
-    Anchor['logstash::begin']
-    -> Class['logstash::package']
-
-    if $hirea_conf_enabled == false {
+    if $hiera_conf_enabled == true {
+      Anchor['logstash::begin']
+      -> Class['logstash::package']
+    } else {
+      Anchor['logstash::begin']
+      -> Class['logstash::package']
       -> Class['logstash::config']
     }
 
     # we need the software and a working configuration before running a service
     Class['logstash::package'] -> Class['logstash::service']
 
-    if $hirea_conf_enabled == false {
+    if $hiera_conf_enabled == false {
       Class['logstash::config']  -> Class['logstash::service']
     }
 
