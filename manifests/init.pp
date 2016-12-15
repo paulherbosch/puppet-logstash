@@ -146,7 +146,6 @@ class logstash(
   $jvm_options       = [],
   $manage_repo       = true,
   $repo_version      = '5.x',
-  $hiera_conf_enabled  = false
 )
 {
   validate_bool($auto_upgrade)
