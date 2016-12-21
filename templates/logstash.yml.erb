@@ -1,2 +1,4 @@
-<% @settings.keys.sort %>
-<%= @settings.to_yaml %>
+---
+<%- @loginput.sort.each do |key,value| -%>
+  <%= "#{key}: #{value}" %>
+<%- end -%>
